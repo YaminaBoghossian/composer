@@ -1,10 +1,23 @@
-var express = require('express');
+const express = require('express');
+const bodyParser = require('body-parser');
 let app = express();
 
-app.listen(8080, 'localhost', function() {
-    console.log('server listening on 8080');
-});
+app.use(express.static('public'));
 
-app.use(function(req, resp) {
-    resp.sendFile('/home/boghossian/devv/composer/index.html')
+app.post(
+    "/auth",
+    // première fonction à être appellée
+    bodyParser.urlencoded({ extended: true }),
+    function(request, response) {
+        console.log(request.body);
+        response.send("Success!")
+    }
+);
+
+app.listen(8080, function(err) {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log('listening on 8080...')
 });
